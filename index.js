@@ -7,57 +7,57 @@ module.exports = function (homebridge) {
 	Service = homebridge.hap.Service;
 	Characteristic = homebridge.hap.Characteristic;
 
-	homebridge.registerAccessory("homebridge-redoid", "MySwitch", mySwitch);
+	homebridge.registerAccessory("homebridge-redoid", "RediodLed", rediodLed);
 };
 
-function mySwitch(log, config) {
+function rediodLed(log, config) {
 	this.log = log;
 	this.saturation = 0, this.hue = 0, this.brightness = 0;
-
+	
 	this.redoid = Redoid({
 		color: "#000000"
 	});
 }
 
-mySwitch.prototype.getServices = function () {
+rediodLed.prototype.getServices = function () {
 	var informationService = new Service.AccessoryInformation();
 	informationService
-		.setCharacteristic(Characteristic.Manufacturer, "My switch manufacturer")
-		.setCharacteristic(Characteristic.Model, "My switch model")
+		.setCharacteristic(Characteristic.Manufacturer, "My LED strip manufacturer")
+		.setCharacteristic(Characteristic.Model, "My LED strip model")
 		.setCharacteristic(Characteristic.SerialNumber, "123-456-789");
 
-	var switchService = new Service.Lightbulb("My switch");
-	switchService
+	var lightbulbService = new Service.Lightbulb("Redoid");
+	lightbulbService
 		.getCharacteristic(Characteristic.On)
 		.on('get', (next) => { return next(); })
 		.on('set', this.setSwitchOnCharacteristic.bind(this));
 
-	switchService.getCharacteristic(Characteristic.Brightness)
+	lightbulbService.getCharacteristic(Characteristic.Brightness)
 		.on('get', (next) => { return next(); })
 		.on('set', this.brightnessSet.bind(this));
 
-	switchService.getCharacteristic(Characteristic.Hue)
+	lightbulbService.getCharacteristic(Characteristic.Hue)
 		.on('get', (next) => { return next(); })
 		.on('set', this.hueSet.bind(this));
 
-	switchService.getCharacteristic(Characteristic.Saturation)
+	lightbulbService.getCharacteristic(Characteristic.Saturation)
 		.on('get', (next) => { return next(); })
 		.on('set', this.saturationSet.bind(this));
 
 	this.informationService = informationService;
-	this.switchService = switchService;
-	return [informationService, switchService];
+	this.lightbulbService = lightbulbService;
+	return [informationService, lightbulbService];
 }
 
 
-mySwitch.prototype.hueSet = function (on, next) {
+rediodLed.prototype.hueSet = function (on, next) {
 	this.hue = on;
 	this.redoid.transition(color({ h: this.hue, s: this.saturation, l: this.brightness }).hex(), 200);
 	this.log("hue: " + on);
 	return next();
 }
 
-mySwitch.prototype.saturationSet = function (on, next) {
+rediodLed.prototype.saturationSet = function (on, next) {
 	this.saturation = on;
 
 	this.redoid.transition(color({ h: this.hue, s: this.saturation, l: this.brightness }).hex(), 200);
@@ -65,7 +65,7 @@ mySwitch.prototype.saturationSet = function (on, next) {
 	return next();
 }
 
-mySwitch.prototype.brightnessSet = function (on, next) {
+rediodLed.prototype.brightnessSet = function (on, next) {
 	this.brightness = on / 2;
 	this.redoid.transition(color({ h: this.hue, s: this.saturation, l: this.brightness }).hex(), 200);
 	this.log("brightness: " + this.brightness);
