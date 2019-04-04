@@ -13,6 +13,11 @@ module.exports = function (homebridge) {
 
 function redoidLed(log, config) {
 	this.log = log;
+
+	this.hue = 0;
+	this.saturation = 0;
+	this.brightness = 0;
+
 	this.redoid = Redoid();
 }
 
@@ -88,7 +93,7 @@ redoidLed.prototype._changeColor = function () {
 	var hexColor = Color({
 		h: this.hue,
 		s: this.saturation,
-		l: this.lightness
+		l: this.brightness
 	}).hex();
 
 	this.log("new color: " + hexColor);
