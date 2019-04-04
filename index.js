@@ -47,7 +47,7 @@ redoidLed.prototype.getServices = function () {
 }
 
 // GETTERS
-radioled.prototype.getCharacteristic = (next) => {
+redoidLed.prototype.getCharacteristic = (next) => {
 	return next();
 }
 
@@ -85,7 +85,7 @@ redoidLed.prototype.setLedOn = function (on, next) {
 
 // HELPERS
 redoidLed.prototype._changeColor = function () {
-	var hexColor = color({
+	var hexColor = Color({
 		h: this.hue,
 		s: this.saturation,
 		l: this.lightness
