@@ -8,22 +8,22 @@ module.exports = function (homebridge) {
 	Service = homebridge.hap.Service;
 	Characteristic = homebridge.hap.Characteristic;
 
-	homebridge.registerAccessory("homebridge-redoid", "RediodLed", rediodLed);
+	homebridge.registerAccessory("homebridge-redoid", "RedoidLed", redoidLed);
 };
 
-function rediodLed(log, config) {
+function redoidLed(log, config) {
 	this.log = log;
 	this.redoid = Redoid();
 }
 
-rediodLed.prototype.getServices = function () {
+redoidLed.prototype.getServices = function () {
 	var informationService = new Service.AccessoryInformation();
 	informationService
 		.setCharacteristic(Characteristic.Manufacturer, "My LED strip manufacturer")
 		.setCharacteristic(Characteristic.Model, "My LED strip model")
 		.setCharacteristic(Characteristic.SerialNumber, "123-456-789");
 
-	var lightbulbService = new Service.Lightbulb("Redoid");
+	var lightbulbService = new Service.Lightbulb("RedoidLed");
 	lightbulbService
 		.getCharacteristic(Characteristic.On)
 		.on('get', this.getCharacteristic.bind(this))
@@ -52,28 +52,28 @@ radioled.prototype.getCharacteristic = (next) => {
 }
 
 // SETTERS
-rediodLed.prototype.setBrightness = function (newVal, next) {
+redoidLed.prototype.setBrightness = function (newVal, next) {
 	this.brightness = newVal / 2;
 	this._changeColor();
 
 	return next();
 }
 
-rediodLed.prototype.setHue = function (newVal, next) {
+redoidLed.prototype.setHue = function (newVal, next) {
 	this.hue = newVal;
 	this._changeColor();
 
 	return next();
 }
 
-rediodLed.prototype.setSaturation = function (newVal, next) {
+redoidLed.prototype.setSaturation = function (newVal, next) {
 	this.saturation = newVal;
 	this._changeColor();
 
 	return next();
 }
 
-rediodLed.prototype.setLedOn = function (on, next) {
+redoidLed.prototype.setLedOn = function (on, next) {
 	if (on) {
 		this._changeColor();
 	} else {
@@ -84,7 +84,7 @@ rediodLed.prototype.setLedOn = function (on, next) {
 };
 
 // HELPERS
-rediodLed.prototype._changeColor = function () {
+redoidLed.prototype._changeColor = function () {
 	var hexColor = color({
 		h: this.hue,
 		s: this.saturation,
