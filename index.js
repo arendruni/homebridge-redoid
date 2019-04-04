@@ -91,5 +91,7 @@ rediodLed.prototype._changeColor = function () {
 		l: this.lightness
 	}).hex();
 
+	this.log("new color: " + hexColor);
+
 	this.redoid.transition(hexColor, TRANSITION_DURATION);
 }
