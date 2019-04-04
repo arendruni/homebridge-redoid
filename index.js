@@ -1,7 +1,8 @@
 var Redoid = require('redoid');
-var color = require('color');
+var Color = require('color');
 
 var Service, Characteristic;
+const TRANSITION_DURATION = 200;
 
 module.exports = function (homebridge) {
 	Service = homebridge.hap.Service;
@@ -12,11 +13,7 @@ module.exports = function (homebridge) {
 
 function rediodLed(log, config) {
 	this.log = log;
-	this.saturation = 0, this.hue = 0, this.brightness = 0;
-	
-	this.redoid = Redoid({
-		color: "#000000"
-	});
+	this.redoid = Redoid();
 }
 
 rediodLed.prototype.getServices = function () {
@@ -29,57 +26,70 @@ rediodLed.prototype.getServices = function () {
 	var lightbulbService = new Service.Lightbulb("Redoid");
 	lightbulbService
 		.getCharacteristic(Characteristic.On)
-		.on('get', (next) => { return next(); })
-		.on('set', this.setSwitchOnCharacteristic.bind(this));
+		.on('get', this.getCharacteristic.bind(this))
+		.on('set', this.setLedOn.bind(this));
 
 	lightbulbService.getCharacteristic(Characteristic.Brightness)
-		.on('get', (next) => { return next(); })
-		.on('set', this.brightnessSet.bind(this));
+		.on('get', this.getCharacteristic.bind(this))
+		.on('set', this.setBrightness.bind(this));
 
 	lightbulbService.getCharacteristic(Characteristic.Hue)
-		.on('get', (next) => { return next(); })
-		.on('set', this.hueSet.bind(this));
+		.on('get', this.getCharacteristic.bind(this))
+		.on('set', this.setHue.bind(this));
 
 	lightbulbService.getCharacteristic(Characteristic.Saturation)
-		.on('get', (next) => { return next(); })
-		.on('set', this.saturationSet.bind(this));
+		.on('get', this.getCharacteristic.bind(this))
+		.on('set', this.setSaturation.bind(this));
 
 	this.informationService = informationService;
 	this.lightbulbService = lightbulbService;
 	return [informationService, lightbulbService];
 }
 
-
-rediodLed.prototype.hueSet = function (on, next) {
-	this.hue = on;
-	this.redoid.transition(color({ h: this.hue, s: this.saturation, l: this.brightness }).hex(), 200);
-	this.log("hue: " + on);
+// GETTERS
+radioled.prototype.getCharacteristic = (next) => {
 	return next();
 }
 
-rediodLed.prototype.saturationSet = function (on, next) {
-	this.saturation = on;
+// SETTERS
+rediodLed.prototype.setBrightness = function (newVal, next) {
+	this.brightness = newVal / 2;
+	this._changeColor();
 
-	this.redoid.transition(color({ h: this.hue, s: this.saturation, l: this.brightness }).hex(), 200);
-	this.log("saturation: " + on);
 	return next();
 }
 
-rediodLed.prototype.brightnessSet = function (on, next) {
-	this.brightness = on / 2;
-	this.redoid.transition(color({ h: this.hue, s: this.saturation, l: this.brightness }).hex(), 200);
-	this.log("brightness: " + this.brightness);
+rediodLed.prototype.setHue = function (newVal, next) {
+	this.hue = newVal;
+	this._changeColor();
+
 	return next();
 }
 
+rediodLed.prototype.setSaturation = function (newVal, next) {
+	this.saturation = newVal;
+	this._changeColor();
 
-mySwitch.prototype.setSwitchOnCharacteristic = function (on, next) {
-	this.log("status: " + on);
+	return next();
+}
 
+rediodLed.prototype.setLedOn = function (on, next) {
 	if (on) {
-		this.redoid.transition(color({ h: this.hue, s: this.saturation, l: this.brightness }).hex(), 200);
+		this._changeColor();
 	} else {
-		this.redoid.turnOff(200);
+		this.redoid.turnOff(TRANSITION_DURATION);
 	}
+
 	return next();
 };
+
+// HELPERS
+rediodLed.prototype._changeColor = function () {
+	var hexColor = color({
+		h: this.hue,
+		s: this.saturation,
+		l: this.lightness
+	}).hex();
+
+	this.redoid.transition(hexColor, TRANSITION_DURATION);
+}
