@@ -17,6 +17,7 @@ function redoidLed(log, config) {
 	this.hue = 0;
 	this.saturation = 0;
 	this.brightness = 0;
+	this.status = false;
 
 	this.redoid = Redoid();
 }
@@ -31,19 +32,19 @@ redoidLed.prototype.getServices = function () {
 	var lightbulbService = new Service.Lightbulb("RedoidLed");
 	lightbulbService
 		.getCharacteristic(Characteristic.On)
-		.on('get', this.getCharacteristic.bind(this))
-		.on('set', this.setLedOn.bind(this));
+		.on('get', this.getStatus.bind(this))
+		.on('set', this.setStatus.bind(this));
 
 	lightbulbService.getCharacteristic(Characteristic.Brightness)
-		.on('get', this.getCharacteristic.bind(this))
+		.on('get', this.getBrightness.bind(this))
 		.on('set', this.setBrightness.bind(this));
 
 	lightbulbService.getCharacteristic(Characteristic.Hue)
-		.on('get', this.getCharacteristic.bind(this))
+		.on('get', this.getHue.bind(this))
 		.on('set', this.setHue.bind(this));
 
 	lightbulbService.getCharacteristic(Characteristic.Saturation)
-		.on('get', this.getCharacteristic.bind(this))
+		.on('get', this.getSaturation.bind(this))
 		.on('set', this.setSaturation.bind(this));
 
 	this.informationService = informationService;
@@ -52,8 +53,20 @@ redoidLed.prototype.getServices = function () {
 }
 
 // GETTERS
-redoidLed.prototype.getCharacteristic = (next) => {
-	return next();
+redoidLed.prototype.getStatus = function (next) {
+	return next(null, this.status);
+}
+
+redoidLed.prototype.getBrightness = function (next) {
+	return next(null, this.brightness);
+}
+
+redoidLed.prototype.getHue = function (next) {
+	return next(null, this.hue);
+}
+
+redoidLed.prototype.getSaturation = function (next) {
+	return next(null, this.saturation);
 }
 
 // SETTERS
@@ -78,8 +91,10 @@ redoidLed.prototype.setSaturation = function (newVal, next) {
 	return next();
 }
 
-redoidLed.prototype.setLedOn = function (on, next) {
-	if (on) {
+redoidLed.prototype.setStatus = function (on, next) {
+	this.status = on;
+
+	if (this.status) {
 		this._changeColor();
 	} else {
 		this.redoid.turnOff(TRANSITION_DURATION);
