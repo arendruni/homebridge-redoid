@@ -53,45 +53,45 @@ redoidLed.prototype.getServices = function () {
 }
 
 // GETTERS
-redoidLed.prototype.getStatus = function (next) {
-	return next(null, this.status);
+redoidLed.prototype.getStatus = function (callback) {
+	callback(null, this.status);
 }
 
-redoidLed.prototype.getBrightness = function (next) {
-	return next(null, this.brightness);
+redoidLed.prototype.getBrightness = function (callback) {
+	callback(null, this.brightness);
 }
 
-redoidLed.prototype.getHue = function (next) {
-	return next(null, this.hue);
+redoidLed.prototype.getHue = function (callback) {
+	callback(null, this.hue);
 }
 
-redoidLed.prototype.getSaturation = function (next) {
-	return next(null, this.saturation);
+redoidLed.prototype.getSaturation = function (callback) {
+	callback(null, this.saturation);
 }
 
 // SETTERS
-redoidLed.prototype.setBrightness = function (newVal, next) {
+redoidLed.prototype.setBrightness = function (newVal, callback) {
 	this.brightness = newVal / 2;
 	this._changeColor();
 
-	return next();
+	callback();
 }
 
-redoidLed.prototype.setHue = function (newVal, next) {
+redoidLed.prototype.setHue = function (newVal, callback) {
 	this.hue = newVal;
 	this._changeColor();
 
-	return next();
+	callback();
 }
 
-redoidLed.prototype.setSaturation = function (newVal, next) {
+redoidLed.prototype.setSaturation = function (newVal, callback) {
 	this.saturation = newVal;
 	this._changeColor();
 
-	return next();
+	callback();
 }
 
-redoidLed.prototype.setStatus = function (on, next) {
+redoidLed.prototype.setStatus = function (on, callback) {
 	this.status = on;
 
 	if (this.status) {
@@ -100,7 +100,7 @@ redoidLed.prototype.setStatus = function (on, next) {
 		this.redoid.turnOff(TRANSITION_DURATION);
 	}
 
-	return next();
+	callback();
 };
 
 // HELPERS
