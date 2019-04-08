@@ -71,7 +71,7 @@ redoidLed.prototype.getSaturation = function (next) {
 
 // SETTERS
 redoidLed.prototype.setBrightness = function (newVal, next) {
-	this.brightness = newVal / 2;
+	this.brightness = newVal;
 	this._changeColor();
 
 	return next();
@@ -108,7 +108,7 @@ redoidLed.prototype._changeColor = function () {
 	var hexColor = Color({
 		h: this.hue,
 		s: this.saturation,
-		l: this.brightness
+		l: this.brightness / 2
 	}).hex();
 
 	this.log("new color: " + hexColor);
