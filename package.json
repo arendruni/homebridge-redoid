@@ -1,19 +1,20 @@
 {
   "name": "homebridge-redoid",
   "version": "0.0.1",
-  "description": "Homebridge plugin to manage IKEA dioder LED bar via Rediod",
+  "description": "Redoid Plugin for Homebridge: https://github.com/nfarina/homebridge",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "echo \"Error: configure and run homebridge to start\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arendruni/homebridge-redoid.git"
+    "url": "https://github.com/arendruni/homebridge-redoid"
   },
   "keywords": [
     "homebridge-plugin"
   ],
-  "author": "",
+  "author": "arendruni",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/arendruni/homebridge-redoid/issues"
