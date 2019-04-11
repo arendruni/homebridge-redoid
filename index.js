@@ -2,7 +2,6 @@ var Redoid = require('redoid');
 var Color = require('color');
 
 var Service, Characteristic;
-const TRANSITION_DURATION = 200;
 
 module.exports = function (homebridge) {
 	Service = homebridge.hap.Service;
@@ -13,6 +12,12 @@ module.exports = function (homebridge) {
 
 function redoidLed(log, config) {
 	this.log = log;
+
+	this.manufacturer = config["manufacturer"] || "My manufacturer";
+	this.model = config["model"] || "My model";
+	this.serial = config["serial-number"] || "123-456-789";
+	this.name = config["name"] || "RedoidLed";
+	this.transitionDuration = config["transition_duration"] || 200;
 
 	this.hue = 0;
 	this.saturation = 0;
@@ -25,11 +30,11 @@ function redoidLed(log, config) {
 redoidLed.prototype.getServices = function () {
 	var informationService = new Service.AccessoryInformation();
 	informationService
-		.setCharacteristic(Characteristic.Manufacturer, "My LED strip manufacturer")
-		.setCharacteristic(Characteristic.Model, "My LED strip model")
-		.setCharacteristic(Characteristic.SerialNumber, "123-456-789");
+		.setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
+		.setCharacteristic(Characteristic.Model, this.model)
+		.setCharacteristic(Characteristic.SerialNumber, this.serial);
 
-	var lightbulbService = new Service.Lightbulb("RedoidLed");
+	var lightbulbService = new Service.Lightbulb(this.name);
 	lightbulbService
 		.getCharacteristic(Characteristic.On)
 		.on('get', this.getStatus.bind(this))
@@ -97,7 +102,7 @@ redoidLed.prototype.setStatus = function (on, next) {
 	if (this.status) {
 		this._changeColor();
 	} else {
-		this.redoid.turnOff(TRANSITION_DURATION);
+		this.redoid.turnOff(this.transitionDuration);
 	}
 
 	return next();
@@ -113,5 +118,5 @@ redoidLed.prototype._changeColor = function () {
 
 	this.log("new color: " + hexColor);
 
-	this.redoid.transition(hexColor, TRANSITION_DURATION);
+	this.redoid.transition(hexColor, this.transitionDuration);
 }
