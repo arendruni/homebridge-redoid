@@ -10,23 +10,21 @@
 ## Installation
 1.	Install Homebridge using `npm install -g homebridge`
 2.	Install this plugin `npm install -g homebridge-redoid`
-3.	Update your configuration file - see a sample configuration below
+3.	Update your configuration file. See sample-config.json in this repository for a sample.
 
 See the Redoid [installation section](https://github.com/ffraenz/redoid#install-dependencies) for more details.
 
 ## Configuration
-Example `config.json`
+See the sample-config.json file to see an example of working accessory config. Following, all available options are explained:
 
-```json
-{
-  "accessories": [
-    {
-      "accessory": "RedoidLed",
-        "name": "redoid-led"
-    }
-  ]
-}
-```
+The only mandatory option is the name:
+ * ```name``` Accessory name.
+
+The other available options are:
+ * ```manufacter``` Manufacter name to be displayed.
+ * ```model``` Model name to be displayed.
+ * ```serial``` Serial number to be displayed.
+ * ```transition_duration``` If not zero, the field defines the transition duration in milliseconds for the LED to move to a new color (Default is 200ms).
 
 ## Licence
 
