@@ -103,14 +103,14 @@ redoidLed.prototype.setStatus = function (on, next) {
 
 // HELPERS
 redoidLed.prototype._changeColor = function (callback) {
-	var hexColor = Color({
+	var rgbColor = Color({
 		h: this.hue,
 		s: this.saturation,
 		l: this.brightness / 2
-	}).hex();
+	}).rgb().color;
 
-	this.log("new color: " + hexColor);
+	this.log("new color: " + rgbColor);
 
-	this.redoid.transition(hexColor, this.transitionDuration);
+	this.redoid.transition(rgbColor, this.transitionDuration);
 	this.redoid.trigger(callback)
 }
