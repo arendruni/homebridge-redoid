@@ -97,7 +97,9 @@ redoidLed.prototype.setStatus = function (on, next) {
 		this._changeColor(next);
 	} else {
 		this.redoid.turnOff(this.transitionDuration);
-		this.redoid.trigger(next);
+		this.redoid.trigger(function () {
+			next();
+		});
 	}
 };
 
@@ -112,5 +114,7 @@ redoidLed.prototype._changeColor = function (callback) {
 	this.log("new color: " + rgbColor);
 
 	this.redoid.transition(rgbColor, this.transitionDuration);
-	this.redoid.trigger(callback)
+	this.redoid.trigger(function () {
+		callback();
+	});
 }
