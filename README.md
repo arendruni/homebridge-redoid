@@ -1,4 +1,6 @@
-[![npm version](https://badge.fury.io/js/homebridge-redoid.svg)](https://badge.fury.io/js/homebridge-redoid)
+[![npm](https://img.shields.io/npm/v/homebridge-redoid.svg)](https://www.npmjs.com/package/homebridge-redoid)
+[![npm](https://img.shields.io/npm/dt/homebridge-redoid.svg)](https://www.npmjs.com/package/homebridge-redoid)
+[![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 # Homebridge Redoid
 
