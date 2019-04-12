@@ -77,39 +77,32 @@ redoidLed.prototype.getSaturation = function (next) {
 // SETTERS
 redoidLed.prototype.setBrightness = function (newVal, next) {
 	this.brightness = newVal;
-	this._changeColor();
-
-	return next();
+	this._changeColor(next);
 }
 
 redoidLed.prototype.setHue = function (newVal, next) {
 	this.hue = newVal;
-	this._changeColor();
-
-	return next();
+	this._changeColor(next);
 }
 
 redoidLed.prototype.setSaturation = function (newVal, next) {
 	this.saturation = newVal;
-	this._changeColor();
-
-	return next();
+	this._changeColor(next);
 }
 
 redoidLed.prototype.setStatus = function (on, next) {
 	this.status = on;
 
 	if (this.status) {
-		this._changeColor();
+		this._changeColor(next);
 	} else {
 		this.redoid.turnOff(this.transitionDuration);
+		this.redoid.trigger(next);
 	}
-
-	return next();
 };
 
 // HELPERS
-redoidLed.prototype._changeColor = function () {
+redoidLed.prototype._changeColor = function (callback) {
 	var hexColor = Color({
 		h: this.hue,
 		s: this.saturation,
@@ -119,4 +112,5 @@ redoidLed.prototype._changeColor = function () {
 	this.log("new color: " + hexColor);
 
 	this.redoid.transition(hexColor, this.transitionDuration);
+	this.redoid.trigger(callback)
 }
