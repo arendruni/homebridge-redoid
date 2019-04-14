@@ -23,9 +23,9 @@ The only mandatory option is the name:
  * ```name``` Accessory name.
 
 The other available options are:
- * ```manufacter``` Manufacter name to be displayed.
+ * ```manufacturer``` Manufacturer name to be displayed.
  * ```model``` Model name to be displayed.
- * ```serial``` Serial number to be displayed.
+ * ```serial-number``` Serial number to be displayed.
  * ```transition_duration``` If not zero, the field defines the transition duration in milliseconds for the LED to move to a new color (Default is 200ms).
 
 ## Licence
