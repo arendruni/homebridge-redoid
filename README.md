@@ -7,26 +7,31 @@
 [Redoid](https://github.com/ffraenz/redoid) plugin for Homebridge
 
 ## Requirements
--	[Homebridge](https://github.com/nfarina/homebridge) - _HomeKit support for the impatient_
+
+-   [Homebridge](https://github.com/nfarina/homebridge) - _HomeKit support for the impatient_
 
 ## Installation
-1.	Install Homebridge using `npm install -g homebridge`
-2.	Install this plugin `npm install -g homebridge-redoid`
-3.	Update your configuration file. See sample-config.json in this repository for a sample.
+
+1.  Install Homebridge using `npm install -g homebridge`
+2.  Install this plugin `npm install -g homebridge-redoid`
+3.  Update your configuration file. See sample-config.json in this repository for a sample.
 
 See the Redoid [installation section](https://github.com/ffraenz/redoid#install-dependencies) for more details.
 
 ## Configuration
+
 See the sample-config.json file to see an example of working accessory config. Following, all available options are explained:
 
 The only mandatory option is the name:
- * ```name``` Accessory name.
+
+-   `name` Accessory name.
 
 The other available options are:
- * ```manufacturer``` Manufacturer name to be displayed.
- * ```model``` Model name to be displayed.
- * ```serial-number``` Serial number to be displayed.
- * ```transition_duration``` If not zero, the field defines the transition duration in milliseconds for the LED to move to a new color (Default is 200ms).
+
+-   `manufacturer` Manufacturer name to be displayed.
+-   `model` Model name to be displayed.
+-   `serial-number` Serial number to be displayed.
+-   `transition_duration` If not zero, the field defines the transition duration in milliseconds for the LED to move to a new color (Default is 200ms).
 
 ## Licence
 
