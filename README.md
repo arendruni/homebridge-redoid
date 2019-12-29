@@ -1,6 +1,7 @@
 [![npm](https://img.shields.io/npm/v/homebridge-redoid.svg)](https://www.npmjs.com/package/homebridge-redoid)
 [![npm](https://img.shields.io/npm/dt/homebridge-redoid.svg)](https://www.npmjs.com/package/homebridge-redoid)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6682780755d246cfa5047bf984c3dc8f)](https://www.codacy.com/manual/arendruni/homebridge-redoid?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=arendruni/homebridge-redoid&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.com/arendruni/homebridge-redoid.svg?branch=master)](https://travis-ci.com/arendruni/homebridge-redoid)
 [![MIT license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 # Homebridge Redoid
