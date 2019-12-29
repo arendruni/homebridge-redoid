@@ -1,6 +1,6 @@
 {
   "name": "homebridge-redoid",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Redoid Plugin for Homebridge: https://github.com/nfarina/homebridge",
   "main": "index.js",
   "scripts": {
